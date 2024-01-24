@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name" translatable="false">SAKM Pult (sms)</string>
+    <string name="devices">Devices</string>
+    <string name="send">Send</string>
+    <string name="message">Message</string>
+    <string name="phone">Phone number</string>
+    <string name="add_device">Add device</string>
+    <string name="additional_phone">Additional phone number</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+</resources>
