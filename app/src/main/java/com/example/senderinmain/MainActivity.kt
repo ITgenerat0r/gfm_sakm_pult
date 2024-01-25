@@ -21,7 +21,7 @@ val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
-    fun checkPermission(): Boolean {
+    fun checkSMSPermission(): Boolean {
         if (checkSelfPermission(android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
             || checkSelfPermission(android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED
             || checkSelfPermission(android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
@@ -34,6 +34,14 @@ class MainActivity : AppCompatActivity() {
             return false;
         }
         return true;
+    }
+
+    fun checkStoragePermission(): Boolean {
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), PackageManager.PERMISSION_GRANTED)
+            return false
+        }
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +63,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val storage_permission = checkStoragePermission()
 
         registerReceiver(
             br,
@@ -78,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
             Log.d(TAG, "Send $message to $phone_number.")
 
-            val permission = checkPermission()
+            val permission = checkSMSPermission()
 
             if( permission){
                 sendSms(phone_number, message)
