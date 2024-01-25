@@ -8,4 +8,6 @@
     <string name="additional_phone">Additional phone number</string>
     <string name="description">Description</string>
     <string name="save">Save</string>
+    <string name="double_device_id">Device with the same id already exist!</string>
+    <string name="required_field">This is required field</string>
 </resources>

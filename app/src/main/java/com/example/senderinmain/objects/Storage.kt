@@ -40,8 +40,14 @@ class Storage (private var context: Context?) {
     fun save(){
         Log.d(TAG, "save()")
         var data = ""
+        var k = false
         for (item in devices){
-            data += item.value.to_storage() + "/r/n"
+            if (k){
+                data += "\r\n"
+            } else {
+                k = true
+            }
+            data += item.value.to_storage()
         }
         Log.d(TAG, data)
         this.write(data)
@@ -50,7 +56,14 @@ class Storage (private var context: Context?) {
     fun load(){
         Log.d(TAG, "load()")
         val data = this.read()
-        Log.d(TAG, data)
+        val list = data.split("\r\n")
+        for (item in list){
+            if (item.length > 0){
+                val device: Device = Device(0)
+                device.from_storage(item)
+                this.add_device(device)
+            }
+        }
     }
 
     fun write(data: String?){
@@ -91,13 +104,18 @@ class Storage (private var context: Context?) {
         return ""
     }
 
-    fun test(){
-        Log.d(TAG, "test()")
-        try {
-            write("fake_data")
-            Log.d(TAG, "Result: " + read())
-        } catch (e: Exception){
-            Log.d(TAG, "Exception: $e")
+    override fun toString():String{
+        var res: String = ""
+        var k = false
+        for (row in devices){
+            if (k) {
+                res += "\r\n"
+            } else {
+                k = true
+            }
+            res += row.value.toString()
         }
+        return res
     }
+
 }

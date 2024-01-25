@@ -2,12 +2,16 @@ package com.example.senderinmain
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import com.example.senderinmain.objects.Device
 import com.example.senderinmain.objects.Storage
 
 class Add_device : AppCompatActivity() {
+    val error_text_color: Int = 0xFFDF0000.toInt()
+    val common_text_color: Int = -3488560
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_device)
@@ -22,8 +26,35 @@ class Add_device : AppCompatActivity() {
         val btn_save = findViewById<Button>(R.id.button_create_device)
 
         btn_save.setOnClickListener{
-            val device: Device = Device(edittext_id.text.toString().toInt())
-            device.set_phone(edittext_phone.text.toString())
+            val id: String = edittext_id.text.toString()
+            val phone: String = edittext_phone.text.toString()
+
+            Log.d(TAG, "Storage: \r\n $storage")
+
+            val id_textview = findViewById<TextView>(R.id.textView_id)
+            if (id == ""){
+                id_textview.setText("ID - " + R.string.required_field)
+                id_textview.setTextColor(error_text_color)
+                return@setOnClickListener
+            }else if (storage.get_device(id.toInt()) != null){
+                id_textview.setText(R.string.double_device_id)
+                id_textview.setTextColor(error_text_color)
+                return@setOnClickListener
+            } else if (id_textview.currentTextColor == error_text_color){
+                id_textview.setText("ID")
+                id_textview.setTextColor(common_text_color)
+            }
+            val phone_textView = findViewById<TextView>(R.id.textView_phone)
+            if (phone == ""){
+                phone_textView.setText("${R.string.phone} - ${R.string.required_field}")
+                phone_textView.setTextColor(error_text_color)
+                return@setOnClickListener
+            } else if (phone_textView.currentTextColor == error_text_color){
+                phone_textView.setText(R.string.phone)
+                phone_textView.setTextColor(common_text_color)
+            }
+            val device: Device = Device(id.toInt())
+            device.set_phone(phone)
             device.set_second_phone(edittext_secondphone.text.toString())
             device.set_description(edittext_description.text.toString())
             storage.add_device(device)

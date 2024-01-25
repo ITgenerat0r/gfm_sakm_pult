@@ -8,4 +8,6 @@
     <string name="additional_phone">Дополнительный номер</string>
     <string name="description">Описание</string>
     <string name="save">Сохранить</string>
+    <string name="double_device_id">Устройство с таким id уже существует!</string>
+    <string name="required_field">Это обязательное поле</string>
 </resources>
