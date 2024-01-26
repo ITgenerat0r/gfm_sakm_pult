@@ -1,5 +1,6 @@
 package com.example.senderinmain
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -31,6 +32,7 @@ class DeviceActivity : AppCompatActivity() {
             val device = storage!!.get_device(id)
             if (device != null){
                 txt_head.setText(device.toString())
+                val intent = Intent(this, DeviceActivity::class.java)
             }
         }
     }

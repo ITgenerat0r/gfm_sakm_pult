@@ -3,6 +3,7 @@ package com.example.senderinmain
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 
 import com.example.senderinmain.objects.Device
 import com.example.senderinmain.objects.SharedPreference
@@ -63,6 +63,9 @@ class DeviceAdapter(private var activity: Activity, private var items: ArrayList
             Log.d(TAG, "onClick(Device $id)")
             val sharedPreference = SharedPreference(activity.baseContext)
             sharedPreference.set_int("device_id", id)
+
+            val intent = Intent(activity.baseContext, DeviceActivity::class.java)
+            activity.startActivity(intent)
             // need to run DeviceActivity()
         }
 
@@ -72,11 +75,14 @@ class DeviceAdapter(private var activity: Activity, private var items: ArrayList
             storage.load()
             storage.delete_device(id)
             storage.save()
+            items = storage.for_adapter()
+            this.notifyDataSetChanged()
         }
 
         viewHolder.txt_comment?.text = device.get_description()
 
         return view as View
     }
+
 
 }
