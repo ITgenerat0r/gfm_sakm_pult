@@ -31,7 +31,7 @@ class Storage (private var context: Context?) {
     }
 
     fun get_device(key: Int):Device? {
-        return devices[key]
+        return devices.get(key)
     }
 
     fun set_device(key: Int, device: Device){

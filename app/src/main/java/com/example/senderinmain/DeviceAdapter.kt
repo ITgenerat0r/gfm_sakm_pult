@@ -2,15 +2,19 @@ package com.example.senderinmain
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.ContextCompat.startActivity
 
 import com.example.senderinmain.objects.Device
+import com.example.senderinmain.objects.SharedPreference
+import com.example.senderinmain.objects.Storage
 
 class DeviceAdapter(private var activity: Activity, private var items: ArrayList<Device>):
     BaseAdapter() {
@@ -51,8 +55,25 @@ class DeviceAdapter(private var activity: Activity, private var items: ArrayList
             viewHolder = view.tag as ViewHolder
         }
 
-        var device = items[position]
+        val device = items[position]
+        val id = device.get_id()
+
         viewHolder.btn_device?.text = "${device.get_id()}: ${device.get_phone()}"
+        viewHolder.btn_device?.setOnClickListener {
+            Log.d(TAG, "onClick(Device $id)")
+            val sharedPreference = SharedPreference(activity.baseContext)
+            sharedPreference.set_int("device_id", id)
+            // need to run DeviceActivity()
+        }
+
+        viewHolder.btn_delete?.setOnClickListener {
+            Log.d(TAG, "onClick(Delete $id)")
+            val storage = Storage(activity.baseContext)
+            storage.load()
+            storage.delete_device(id)
+            storage.save()
+        }
+
         viewHolder.txt_comment?.text = device.get_description()
 
         return view as View

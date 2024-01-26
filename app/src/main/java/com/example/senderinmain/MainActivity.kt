@@ -18,6 +18,8 @@ import android.widget.ListView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.senderinmain.objects.Device
+import com.example.senderinmain.objects.SharedPreference
 import com.example.senderinmain.objects.Storage
 
 
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     var listview_devices: ListView? = null
     var storage: Storage? = null
+    var sharedPreference: SharedPreference? = null
 
     fun checkSMSPermission(): Boolean {
         if (checkSelfPermission(android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
@@ -63,6 +66,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         val actionBar: ActionBar? = supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
+
+        sharedPreference = SharedPreference(this)
 
         listview_devices = findViewById<ListView>(R.id.listview_devices)
         storage = Storage(this)
@@ -122,7 +127,13 @@ class MainActivity : AppCompatActivity() {
         val btn_create_device = findViewById<Button>(R.id.btn_add_device)
 
         btn_create_device.setOnClickListener{
-            val intent = Intent(this, Add_device::class.java)
+            val device = Device(333)
+            device.set_phone(89003571208.toString())
+            device.set_second_phone("333999")
+            device.set_description("the test")
+
+            sharedPreference?.set_int("device_id", 1)
+            val intent = Intent(this, DeviceActivity::class.java)
             startActivity(intent)
         }
     }
