@@ -16,6 +16,7 @@ class Storage (private var context: Context?) {
 //    interface MutableList<Device>: List<Device>, MutableCollection<Device>
 //    var devices = mutableListOf<Device>()
     val devices = mutableMapOf<Int, Device>()
+    val list_devices = ArrayList<Device>()
 
     val filename = "devices_storage"
 
@@ -26,15 +27,25 @@ class Storage (private var context: Context?) {
 
     fun add_device(device: Device){
         devices.put(device.get_id(), device)
+        list_devices.add(device)
     }
 
     fun get_device(key: Int):Device? {
         return devices[key]
     }
 
+    fun set_device(key: Int, device: Device){
+        val old_device = devices.get(key)
+        devices[key] = device
+        list_devices.remove(old_device)
+        list_devices.add(device)
+    }
+
 
     fun delete_device(key: Int){
+        val device = devices.get(key)
         devices.remove(key)
+        list_devices.remove(device)
     }
 
     fun save(){
@@ -104,8 +115,8 @@ class Storage (private var context: Context?) {
         return ""
     }
 
-    fun getStorage():MutableMap<Int, Device>{
-        return devices
+    fun for_adapter():ArrayList<Device>{
+        return list_devices
     }
 
     override fun toString():String{

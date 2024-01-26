@@ -14,9 +14,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ListView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.senderinmain.objects.Storage
 
 
 val TAG = "MainActivity"
@@ -25,6 +27,9 @@ val TAG = "MainActivity"
 
 
 class MainActivity : AppCompatActivity() {
+
+    var listview_devices: ListView? = null
+    var storage: Storage? = null
 
     fun checkSMSPermission(): Boolean {
         if (checkSelfPermission(android.Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED
@@ -58,6 +63,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         val actionBar: ActionBar? = supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
+
+        listview_devices = findViewById<ListView>(R.id.listview_devices)
+        storage = Storage(this)
+        storage!!.load()
+        val adapter = DeviceAdapter(this, storage!!.for_adapter())
+        listview_devices?.adapter = adapter
+        adapter.notifyDataSetChanged()
 
         val br = object : BroadcastReceiver() {
             override fun onReceive(p0: Context?, p1: Intent?) {
@@ -113,6 +125,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Add_device::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        Log.d(TAG, "onResume()")
+        listview_devices = findViewById<ListView>(R.id.listview_devices)
+        storage = Storage(this)
+        storage!!.load()
+        val adapter = DeviceAdapter(this, storage!!.for_adapter())
+        listview_devices?.adapter = adapter
+        adapter.notifyDataSetChanged()
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
