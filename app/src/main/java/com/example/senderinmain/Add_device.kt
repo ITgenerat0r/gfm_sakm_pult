@@ -1,5 +1,6 @@
 package com.example.senderinmain
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -33,7 +34,7 @@ class Add_device : AppCompatActivity() {
 
             val id_textview = findViewById<TextView>(R.id.textView_id)
             if (id == ""){
-                id_textview.setText("ID - " + R.string.required_field)
+                id_textview.setText("ID - " + getString(R.string.required_field))
                 id_textview.setTextColor(error_text_color)
                 return@setOnClickListener
             }else if (storage.get_device(id.toInt()) != null){
@@ -46,7 +47,7 @@ class Add_device : AppCompatActivity() {
             }
             val phone_textView = findViewById<TextView>(R.id.textView_phone)
             if (phone == ""){
-                phone_textView.setText("${R.string.phone} - ${R.string.required_field}")
+                phone_textView.setText("${getString(R.string.phone)} - ${getString(R.string.required_field)}")
                 phone_textView.setTextColor(error_text_color)
                 return@setOnClickListener
             } else if (phone_textView.currentTextColor == error_text_color){
@@ -59,6 +60,9 @@ class Add_device : AppCompatActivity() {
             device.set_description(edittext_description.text.toString())
             storage.add_device(device)
             storage.save()
+
+
+            super.onBackPressed()
         }
     }
 }

@@ -104,6 +104,10 @@ class Storage (private var context: Context?) {
         return ""
     }
 
+    fun getStorage():MutableMap<Int, Device>{
+        return devices
+    }
+
     override fun toString():String{
         var res: String = ""
         var k = false

@@ -14,9 +14,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+
 
 val TAG = "MainActivity"
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -45,8 +50,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate()")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.setDisplayShowTitleEnabled(false)
 
         val br = object : BroadcastReceiver() {
             override fun onReceive(p0: Context?, p1: Intent?) {
