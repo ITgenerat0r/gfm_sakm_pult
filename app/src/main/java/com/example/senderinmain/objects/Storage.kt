@@ -2,9 +2,12 @@ package com.example.senderinmain.objects
 
 
 import android.R.string
+import android.app.Notification
 import android.content.Context
+import android.content.pm.PackageManager
 import android.provider.Telephony.Mms.Part.FILENAME
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -20,6 +23,13 @@ class Storage (private var context: Context?) {
 
     val filename = "devices_storage"
 
+    fun checkStoragePermission(): Boolean {
+        if (context?.applicationContext?.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), PackageManager.PERMISSION_GRANTED)
+            return false
+        }
+        return true
+    }
 
     fun count_devices(): Int{
         return devices.size
@@ -79,6 +89,10 @@ class Storage (private var context: Context?) {
 
     fun write(data: String?){
         Log.d(TAG, "write($data)")
+        if (checkStoragePermission() != true) {
+            Log.d(TAG, "We don't have write permissions!")
+//            return
+        }
         try {
 //            val file = File(filename)
             val path = context?.getFilesDir()

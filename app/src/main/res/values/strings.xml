@@ -10,4 +10,6 @@
     <string name="save">Save</string>
     <string name="double_device_id">Device with the same id already exist!</string>
     <string name="required_field">This is required field</string>
+    <string name="id" translatable="false">ID</string>
+    <string name="command">Command</string>
 </resources>

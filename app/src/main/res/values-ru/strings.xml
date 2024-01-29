@@ -10,4 +10,5 @@
     <string name="save">Сохранить</string>
     <string name="double_device_id">Устройство с таким id уже существует!</string>
     <string name="required_field">Это обязательное поле</string>
+    <string name="command">Команда</string>
 </resources>

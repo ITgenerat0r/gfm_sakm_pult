@@ -18,7 +18,6 @@ import android.widget.ListView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.senderinmain.objects.Device
 import com.example.senderinmain.objects.SharedPreference
 import com.example.senderinmain.objects.Storage
 
@@ -76,6 +75,8 @@ class MainActivity : AppCompatActivity() {
         listview_devices?.adapter = adapter
         adapter.notifyDataSetChanged()
 
+        val smspermission = checkSMSPermission()
+
         val br = object : BroadcastReceiver() {
             override fun onReceive(p0: Context?, p1: Intent?) {
                 for (sms in Telephony.Sms.Intents.getMessagesFromIntent(
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             RECEIVER_EXPORTED
         )
 
-        val btn_send = findViewById<Button>(R.id.btn_send)
+        val btn_send = findViewById<Button>(R.id.btn_send_test)
         val input_phone = findViewById<EditText>(R.id.EditText_phone)
         val input_message = findViewById<EditText>(R.id.EditText_message)
 
@@ -116,9 +117,8 @@ class MainActivity : AppCompatActivity() {
 
             Log.d(TAG, "Send $message to $phone_number.")
 
-            val permission = checkSMSPermission()
 
-            if( permission){
+            if( smspermission){
                 sendSms(phone_number, message)
             }
 
@@ -127,13 +127,8 @@ class MainActivity : AppCompatActivity() {
         val btn_create_device = findViewById<Button>(R.id.btn_add_device)
 
         btn_create_device.setOnClickListener{
-            val device = Device(333)
-            device.set_phone(89003571208.toString())
-            device.set_second_phone("333999")
-            device.set_description("the test")
 
-            sharedPreference?.set_int("device_id", 1)
-            val intent = Intent(this, DeviceActivity::class.java)
+            val intent = Intent(this, Add_device::class.java)
             startActivity(intent)
         }
     }
