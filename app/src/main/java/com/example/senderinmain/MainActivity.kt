@@ -77,52 +77,52 @@ class MainActivity : AppCompatActivity() {
 
         val smspermission = checkSMSPermission()
 
-        val br = object : BroadcastReceiver() {
-            override fun onReceive(p0: Context?, p1: Intent?) {
-                for (sms in Telephony.Sms.Intents.getMessagesFromIntent(
-                    p1
-                )) {
-                    val smsSender = sms.originatingAddress
-                    val smsMessageBody = sms.displayMessageBody
-                    Log.d(TAG, "From $smsSender received $smsMessageBody")
-                    if (smsSender == "+79648455648") {
-//                            var binding.textView.text = smsMessageBody
-                        break
-                    }
-                }
-            }
-        }
+//        val br = object : BroadcastReceiver() {
+//            override fun onReceive(p0: Context?, p1: Intent?) {
+//                for (sms in Telephony.Sms.Intents.getMessagesFromIntent(
+//                    p1
+//                )) {
+//                    val smsSender = sms.originatingAddress
+//                    val smsMessageBody = sms.displayMessageBody
+//                    Log.d(TAG, "From $smsSender received $smsMessageBody")
+//                    if (smsSender == "+79648455648") {
+////                            var binding.textView.text = smsMessageBody
+//                        break
+//                    }
+//                }
+//            }
+//        }
 
         val storage_permission = checkStoragePermission()
 
-        registerReceiver(
-            br,
-            IntentFilter("android.provider.Telephony.SMS_RECEIVED"),
-            RECEIVER_EXPORTED
-        )
+//        registerReceiver(
+//            br,
+//            IntentFilter("android.provider.Telephony.SMS_RECEIVED"),
+//            RECEIVER_EXPORTED
+//        )
 
-        val btn_send = findViewById<Button>(R.id.btn_send_test)
-        val input_phone = findViewById<EditText>(R.id.EditText_phone)
-        val input_message = findViewById<EditText>(R.id.EditText_message)
+//        val btn_send = findViewById<Button>(R.id.btn_send_test)
+//        val input_phone = findViewById<EditText>(R.id.EditText_phone)
+//        val input_message = findViewById<EditText>(R.id.EditText_message)
 
-        btn_send.setOnClickListener {
-            var phone_number = "" + input_phone.text
-            var message = "" + input_message.editableText
-            if (phone_number.equals("")) {
-                phone_number = "+79648455648"
-            }
-            if (message.equals("")) {
-                message = "Empty message."
-            }
-
-            Log.d(TAG, "Send $message to $phone_number.")
-
-
-            if( smspermission){
-                sendSms(phone_number, message)
-            }
-
-        }
+//        btn_send.setOnClickListener {
+//            var phone_number = "" + input_phone.text
+//            var message = "" + input_message.editableText
+//            if (phone_number.equals("")) {
+//                phone_number = "+79648455648"
+//            }
+//            if (message.equals("")) {
+//                message = "Empty message."
+//            }
+//
+//            Log.d(TAG, "Send $message to $phone_number.")
+//
+//
+//            if( smspermission){
+//                sendSms(phone_number, message)
+//            }
+//
+//        }
 
         val btn_create_device = findViewById<Button>(R.id.btn_add_device)
 

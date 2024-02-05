@@ -58,6 +58,17 @@ class Storage (private var context: Context?) {
         list_devices.remove(device)
     }
 
+    fun get_new_id(): Int{
+        var i: Int = 1;
+        while (i++ < 1000){
+            if (devices.get(i) == null){
+//                Log.d(TAG, "$i, YES")
+                return i
+            }
+        }
+        return 0;
+    }
+
     fun save(){
         Log.d(TAG, "save()")
         var data = ""
