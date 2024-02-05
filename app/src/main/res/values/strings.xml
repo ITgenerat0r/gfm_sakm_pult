@@ -12,4 +12,17 @@
     <string name="required_field">This is required field</string>
     <string name="id" translatable="false">ID</string>
     <string name="command">Command</string>
+    <string name="device_type_test">The test bin</string>
+    <string name="device_type_temp">Temperature sensor</string>
+    <string name="device_type_pressure">Pressure sensor</string>
+    <string name="device_type_humidity">Humidity sensor</string>
+    <string name="device_type_voltmeter">Voltmeter</string>
+    <string name="device_type_ammeter">Ammeter</string>
+    <string name="device_location_unknown">Unknown</string>
+    <string name="device_location_internal">Internal sensor</string>
+    <string name="device_location_external">External sensor</string>
+    <string name="device_location_flare">Flare fittings</string>
+    <string name="device_location_prouver">Prouver</string>
+    <string name="device_location_discharge_line">Discharge line</string>
+    <string name="device_location_annular_line">Annular line</string>
 </resources>

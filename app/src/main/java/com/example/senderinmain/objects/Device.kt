@@ -14,7 +14,7 @@ class Device(private var id: Int) {
         return id
     }
 
-    private  fun set_id(id: Int){
+    fun set_id(id: Int){
         this.id = id
     }
     fun set_phone(phone: String){

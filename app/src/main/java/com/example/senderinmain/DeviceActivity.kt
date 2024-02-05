@@ -18,6 +18,7 @@ import com.example.senderinmain.objects.Storage
 
 import android.provider.Telephony
 import android.telephony.SmsManager
+import com.example.senderinmain.objects.Entities
 import com.example.senderinmain.objects.SMSgateway
 
 
@@ -42,6 +43,8 @@ class DeviceActivity : AppCompatActivity() {
         val txt_id = findViewById<TextView>(R.id.textView_head)
         val txt_phone = findViewById<TextView>(R.id.textView_phone)
         val txt_description = findViewById<TextView>(R.id.textView_description)
+
+        val out_txt = findViewById<TextView>(R.id.editText_output)
 
         val input_command = findViewById<EditText>(R.id.editText_command)
         val btn_send = findViewById<Button>(R.id.btn_send)
@@ -84,7 +87,11 @@ class DeviceActivity : AppCompatActivity() {
             val permission = smsGateway!!.checkSMSPermission()
 
             if( permission){
+                out_txt.setText(out_txt.text.toString() + "\r\n Send: \r\n $message")
                 smsGateway!!.sendSms(phone_number!!, message)
+            } else {
+                Log.d(TAG, "Where is permission?")
+                out_txt.setText(out_txt.text.toString() + "\r\n Can't send, permission denied.\r\n")
             }
         }
 
@@ -98,8 +105,26 @@ class DeviceActivity : AppCompatActivity() {
                     val smsMessageBody = sms.displayMessageBody
                     Log.d(TAG, "From $smsSender received $smsMessageBody")
                     if (smsSender == device?.get_phone() || smsSender == device?.get_second_phone()) {
-                        val out_txt = findViewById<EditText>(R.id.editText_output)
-                        out_txt.setText(smsMessageBody)
+                        val res: String = out_txt.text.toString() + "\r\n Receive: \r\n" + smsMessageBody
+                        out_txt.setText(res)
+                        val rows = smsMessageBody.split("\r\n")
+                        for (row in rows){
+                            Log.d(TAG, "ROW: $row")
+                            val ind = row.indexOf(':')
+                            if (ind >= 0){
+                                Log.d(TAG, "parse")
+                                val key = row.substring(0, ind)
+                                val value = row.substring(ind+1)
+                                Log.d(TAG, "key: $key")
+                                Log.d(TAG, "value: $value")
+                                if (key == "ID"){
+                                    device?.set_id(value.toInt())
+                                }
+                                val sensor = Entities(applicationContext)
+                            } else {
+                                Log.d(TAG, "another")
+                            }
+                        }
                         break
                     }
                 }

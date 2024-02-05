@@ -11,4 +11,17 @@
     <string name="double_device_id">Устройство с таким id уже существует!</string>
     <string name="required_field">Это обязательное поле</string>
     <string name="command">Команда</string>
+    <string name="device_type_test">Тестовая прошивка</string>
+    <string name="device_type_temp">Датчик температуры (ДТ-09L) [гр. С]</string>
+    <string name="device_type_pressure">Датчик давления (ДДИ-40L) [Ат.]</string>
+    <string name="device_type_humidity">Датчик влажности (Гц)</string>
+    <string name="device_type_voltmeter">Вольтметр (в)</string>
+    <string name="device_type_ammeter">Амперметр (А)</string>
+    <string name="device_location_unknown">Неизвестная</string>
+    <string name="device_location_external">Внешний датчик</string>
+    <string name="device_location_flare">Факельная арматура</string>
+    <string name="device_location_prouver">Прувер</string>
+    <string name="device_location_annular_line">Затрубная линия</string>
+    <string name="device_location_discharge_line">Линия нагнетания</string>
+    <string name="device_location_internal">Внутренний датчик</string>
 </resources>
