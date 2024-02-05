@@ -93,6 +93,7 @@ class DeviceActivity : AppCompatActivity() {
                 Log.d(TAG, "Where is permission?")
                 out_txt.setText(out_txt.text.toString() + "\r\n Can't send, permission denied.\r\n")
             }
+            input_command.setText("")
         }
 
         Log.d(TAG, "Set up BroadcastReceiver for SMS...")

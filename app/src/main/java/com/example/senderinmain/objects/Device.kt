@@ -19,8 +19,15 @@ class Device(private var id: Int) {
     }
     fun set_phone(phone: String){
         if (phone != ""){
-            this.phone = phone
+            this.phone = this.parse_phone(phone)
         }
+    }
+
+    fun parse_phone(phone: String): String?{
+        if (phone.length == 11 && phone[0] == '8'){
+            return "+7" + phone.substring(1)
+        }
+        return phone
     }
 
     fun set_second_phone(phone: String){
