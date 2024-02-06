@@ -18,6 +18,8 @@ import com.example.senderinmain.objects.Storage
 
 import android.provider.Telephony
 import android.telephony.SmsManager
+import android.widget.ListView
+import com.example.senderinmain.objects.Command
 import com.example.senderinmain.objects.Entities
 import com.example.senderinmain.objects.SMSgateway
 
@@ -32,6 +34,8 @@ class DeviceActivity : AppCompatActivity() {
     var device: Device? = null
     var sharedPreference: SharedPreference? = null
     var smsGateway: SMSgateway? = null
+    var listview_commands: ListView? = null
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         val TAG = "DeviceActivity"
@@ -54,6 +58,17 @@ class DeviceActivity : AppCompatActivity() {
         sharedPreference = SharedPreference(this)
         smsGateway = SMSgateway(this)
         smsGateway!!.checkSMSPermission()
+
+        listview_commands = findViewById<ListView>(R.id.listview_commands)
+        val empty_rows = ArrayList<Command>()
+        for (i in 1..10){
+            val cm = Command("number $i")
+            empty_rows.add(cm)
+        }
+        Log.d(TAG, "size rows: ${empty_rows.size}")
+        val adapter = DeviceCommandsAdapter(this, empty_rows)
+        listview_commands?.adapter = adapter
+        adapter.notifyDataSetChanged()
 
         Log.d(TAG, "Getting device...")
         val id: Int = sharedPreference!!.get_int("device_id")

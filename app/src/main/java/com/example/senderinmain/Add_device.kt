@@ -23,8 +23,14 @@ class Add_device : AppCompatActivity() {
 
 //        val edittext_id = findViewById<EditText>(R.id.EditText_id)
 //        edittext_id.visibility = View.GONE
+        val phone_textView = findViewById<TextView>(R.id.textView_phone)
         val edittext_phone = findViewById<EditText>(R.id.EditText_phone)
+
         val edittext_secondphone = findViewById<EditText>(R.id.EditText_additional_phone)
+        edittext_secondphone.visibility = View.GONE
+        val secondphone_textView = findViewById<TextView>(R.id.textView_additional_phone)
+        secondphone_textView.visibility = View.GONE
+
         val edittext_description = findViewById<EditText>(R.id.EditText_description)
         val btn_save = findViewById<Button>(R.id.button_create_device)
 
@@ -47,7 +53,6 @@ class Add_device : AppCompatActivity() {
 //                id_textview.setText("ID")
 //                id_textview.setTextColor(common_text_color)
 //            }
-            val phone_textView = findViewById<TextView>(R.id.textView_phone)
             if (phone == ""){
                 phone_textView.setText("${getString(R.string.phone)} - ${getString(R.string.required_field)}")
                 phone_textView.setTextColor(error_text_color)
