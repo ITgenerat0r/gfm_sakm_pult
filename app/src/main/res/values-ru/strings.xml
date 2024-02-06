@@ -24,4 +24,18 @@
     <string name="device_location_annular_line">Затрубная линия</string>
     <string name="device_location_discharge_line">Линия нагнетания</string>
     <string name="device_location_internal">Внутренний датчик</string>
+    <string name="rst">Перезагрузка регистратора</string>
+    <string name="nwell">Новая скважина</string>
+    <string name="srv">Задает адрес, порт, и интервал подключения сервера сбора данных</string>
+    <string name="upd">Задает адрес, порт, и интервал подключения сервера обновлений</string>
+    <string name="apn">Задать точку доступа, (APN, логин, пароль) для установки GPRS соединения</string>
+    <string name="gps">Получить текущие координаты регистратора</string>
+    <string name="clr">Очистка памяти регистратора</string>
+    <string name="stat">Запрос статистики работы регистратора</string>
+    <string name="val_cm">Запрос текущих показаний датчиков</string>
+    <string name="showcfg">Запрос текущей конфигурации модема</string>
+    <string name="time_cm">Установка времени в регистраторе</string>
+    <string name="reqdata">Инициировать регистратор на подключение к серверу сбора данных</string>
+    <string name="requpd">Инициировать регистратор на подключение к серверу обновлений</string>
+    <string name="swsim">Переслючить активную SIM карту</string>
 </resources>

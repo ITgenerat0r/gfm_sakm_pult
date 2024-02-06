@@ -14,10 +14,28 @@ import com.example.senderinmain.objects.Device
 import com.example.senderinmain.objects.SharedPreference
 import com.example.senderinmain.objects.Storage
 
-class DeviceCommandsAdapter(private var activity: Activity, private var items: ArrayList<Command>):
+class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
     BaseAdapter()  {
 
     val TAG = "DeviceCommandsAdapter"
+
+    private var items = ArrayList<Command>()
+    fun init_items(){
+        items.add(Command("RST", activity.getString(R.string.rst)))
+        items.add(Command("NWELL", activity.getString(R.string.nwell)))
+        items.add(Command("SRV", activity.getString(R.string.srv)))
+        items.add(Command("UPD", activity.getString(R.string.upd)))
+        items.add(Command("APN", activity.getString(R.string.apn)))
+        items.add(Command("GPS", activity.getString(R.string.gps)))
+        items.add(Command("CLR", activity.getString(R.string.clr)))
+        items.add(Command("STAT", activity.getString(R.string.stat)))
+        items.add(Command("VAL", activity.getString(R.string.val_cm)))
+        items.add(Command("SHOWCFG", activity.getString(R.string.showcfg)))
+        items.add(Command("TIME", activity.getString(R.string.time_cm)))
+        items.add(Command("REQDATA", activity.getString(R.string.reqdata)))
+        items.add(Command("REQUPD", activity.getString(R.string.requpd)))
+
+    }
 
     private class ViewHolder(row: View?){
 
@@ -78,7 +96,7 @@ class DeviceCommandsAdapter(private var activity: Activity, private var items: A
 //            this.notifyDataSetChanged()
 //        }
 
-        viewHolder.txt_test?.text = "row: $position"
+        viewHolder.txt_test?.text = "$position: ${command.command}, ${command.description}"
 
         return view as View
     }

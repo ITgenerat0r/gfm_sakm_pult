@@ -60,26 +60,29 @@ class DeviceActivity : AppCompatActivity() {
         smsGateway!!.checkSMSPermission()
 
         listview_commands = findViewById<ListView>(R.id.listview_commands)
-        val empty_rows = ArrayList<Command>()
-        for (i in 1..10){
-            val cm = Command("number $i")
-            empty_rows.add(cm)
-        }
-        Log.d(TAG, "size rows: ${empty_rows.size}")
-        val adapter = DeviceCommandsAdapter(this, empty_rows)
-        listview_commands?.adapter = adapter
-        adapter.notifyDataSetChanged()
+//        val empty_rows = ArrayList<Command>()
+//        for (i in 1..10){
+//            val cm = Command("number $i")
+//            empty_rows.add(cm)
+//        }
+//        Log.d(TAG, "size rows: ${empty_rows.size}")
+
 
         Log.d(TAG, "Getting device...")
         val id: Int = sharedPreference!!.get_int("device_id")
-        if (id > 0){
-            Log.d(TAG,"id > 0")
+        if (id > 0) {
+            Log.d(TAG, "id > 0")
             device = storage!!.get_device(id)
-            if (device != null){
+            if (device != null) {
                 txt_id.setText(getString(R.string.id) + ": " + device!!.get_id().toString())
                 txt_phone.text = "" + getString(R.string.phone) + ": " + device!!.get_phone()
-                txt_description.text = "" + getString(R.string.description) + ": " + device!!.get_description()
+                txt_description.text =
+                    "" + getString(R.string.description) + ": " + device!!.get_description()
                 val intent = Intent(this, DeviceActivity::class.java)
+                val adapter = DeviceCommandsAdapter(this, device!!.get_phone())
+                adapter.init_items()
+                listview_commands?.adapter = adapter
+                adapter.notifyDataSetChanged()
             }
         }
 

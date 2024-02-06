@@ -25,4 +25,18 @@
     <string name="device_location_prouver">Prouver</string>
     <string name="device_location_discharge_line">Discharge line</string>
     <string name="device_location_annular_line">Annular line</string>
+    <string name="rst">Reboot registrator</string>
+    <string name="nwell">New well</string>
+    <string name="srv">Set up address, port and connection interval for data server</string>
+    <string name="upd">Set up address, port and connection interval for update server</string>
+    <string name="apn">Make APN, (address:login:password) for GPRS connection</string>
+    <string name="gps">Get current gps</string>
+    <string name="clr">Clear registrator memory</string>
+    <string name="stat">Get statistics</string>
+    <string name="val_cm">Get current sensors values</string>
+    <string name="showcfg">Get current configuration</string>
+    <string name="time_cm">Set up time</string>
+    <string name="reqdata">Initiate registrator for connection to data server</string>
+    <string name="requpd">Initiate registrator for connection to update server</string>
+    <string name="swsim">Switch SIM</string>
 </resources>
