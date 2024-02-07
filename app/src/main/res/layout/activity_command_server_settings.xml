@@ -30,6 +30,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_first" />
 
+
+    <TextView
+        android:id="@+id/textView_second"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_first" />
+
     <EditText
         android:id="@+id/EditText_second"
         android:layout_width="0dp"
@@ -40,7 +53,20 @@
         android:hint = "@string/port"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_first" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_second" />
+
+
+    <TextView
+        android:id="@+id/textView_third"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditText_second" />
 
     <EditText
         android:id="@+id/EditText_third"
@@ -52,7 +78,7 @@
         android:hint = "@string/connection_interval"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_second" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_third" />
 
     <Button
         android:id="@+id/button_apply"

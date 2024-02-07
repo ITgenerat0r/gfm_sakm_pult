@@ -46,4 +46,6 @@
     <string name="login">Login</string>
     <string name="apn" translatable="false">APN</string>
     <string name="apply">Apply</string>
+    <string name="wrong_ip">IP should be *.*.*.*, where * is number</string>
+    <string name="wrong_number">This should be number</string>
 </resources>

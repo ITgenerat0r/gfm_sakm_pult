@@ -44,4 +44,6 @@
     <string name="password">Пароль</string>
     <string name="login">Логин</string>
     <string name="apply">Применить</string>
+    <string name="wrong_ip">IP должен быть *.*.*.*, где * это число</string>
+    <string name="wrong_number">Требуется число</string>
 </resources>

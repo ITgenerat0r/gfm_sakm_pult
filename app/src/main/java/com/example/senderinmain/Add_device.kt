@@ -69,7 +69,8 @@ class Add_device : AppCompatActivity() {
             storage.save()
 
 
-            super.onBackPressed()
+            this.finish()
+//            super.onBackPressed()
         }
     }
 }
