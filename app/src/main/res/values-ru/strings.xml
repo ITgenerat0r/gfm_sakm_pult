@@ -28,7 +28,7 @@
     <string name="nwell">Новая скважина</string>
     <string name="srv">Задает адрес, порт, и интервал подключения сервера сбора данных</string>
     <string name="upd">Задает адрес, порт, и интервал подключения сервера обновлений</string>
-    <string name="apn">Задать точку доступа, (APN, логин, пароль) для установки GPRS соединения</string>
+    <string name="apn_cm">Задать точку доступа, (APN, логин, пароль) для установки GPRS соединения</string>
     <string name="gps">Получить текущие координаты регистратора</string>
     <string name="clr">Очистка памяти регистратора</string>
     <string name="stat">Запрос статистики работы регистратора</string>
@@ -38,4 +38,10 @@
     <string name="reqdata">Инициировать регистратор на подключение к серверу сбора данных</string>
     <string name="requpd">Инициировать регистратор на подключение к серверу обновлений</string>
     <string name="swsim">Переслючить активную SIM карту</string>
+    <string name="server">IP сервера</string>
+    <string name="port">Порт</string>
+    <string name="connection_interval">Интервал подключением (в сек.)</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="apply">Применить</string>
 </resources>

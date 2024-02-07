@@ -29,7 +29,7 @@
     <string name="nwell">New well</string>
     <string name="srv">Set up address, port and connection interval for data server</string>
     <string name="upd">Set up address, port and connection interval for update server</string>
-    <string name="apn">Make APN, (address:login:password) for GPRS connection</string>
+    <string name="apn_cm">Make APN, (address:login:password) for GPRS connection</string>
     <string name="gps">Get current gps</string>
     <string name="clr">Clear registrator memory</string>
     <string name="stat">Get statistics</string>
@@ -39,4 +39,11 @@
     <string name="reqdata">Initiate registrator for connection to data server</string>
     <string name="requpd">Initiate registrator for connection to update server</string>
     <string name="swsim">Switch SIM</string>
+    <string name="server">Server IP</string>
+    <string name="port">Port</string>
+    <string name="connection_interval">Connection interval (sec)</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="apn" translatable="false">APN</string>
+    <string name="apply">Apply</string>
 </resources>

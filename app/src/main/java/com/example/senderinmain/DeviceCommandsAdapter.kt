@@ -10,9 +10,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.senderinmain.objects.Command
-import com.example.senderinmain.objects.Device
-import com.example.senderinmain.objects.SharedPreference
-import com.example.senderinmain.objects.Storage
 
 class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
     BaseAdapter()  {
@@ -21,19 +18,38 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
 
     private var items = ArrayList<Command>()
     fun init_items(){
-        items.add(Command("RST", activity.getString(R.string.rst)))
-        items.add(Command("NWELL", activity.getString(R.string.nwell)))
-        items.add(Command("SRV", activity.getString(R.string.srv)))
-        items.add(Command("UPD", activity.getString(R.string.upd)))
-        items.add(Command("APN", activity.getString(R.string.apn)))
-        items.add(Command("GPS", activity.getString(R.string.gps)))
-        items.add(Command("CLR", activity.getString(R.string.clr)))
-        items.add(Command("STAT", activity.getString(R.string.stat)))
-        items.add(Command("VAL", activity.getString(R.string.val_cm)))
-        items.add(Command("SHOWCFG", activity.getString(R.string.showcfg)))
-        items.add(Command("TIME", activity.getString(R.string.time_cm)))
-        items.add(Command("REQDATA", activity.getString(R.string.reqdata)))
-        items.add(Command("REQUPD", activity.getString(R.string.requpd)))
+        items.add(Command(activity.baseContext,"RST", activity.getString(R.string.rst)))
+
+        items.add(Command(activity.baseContext,"NWELL", activity.getString(R.string.nwell)))
+
+        items.add(Command(activity.baseContext,"SRV", activity.getString(R.string.srv)))
+        items.get(2).intent = Intent(activity.baseContext, CommandServerSettings::class.java)
+        items.get(2).redirect_activity = 1
+
+        items.add(Command(activity.baseContext,"UPD", activity.getString(R.string.upd)))
+        items.get(3).intent = Intent(activity.baseContext, CommandServerSettings::class.java)
+        items.get(3).redirect_activity = 1
+
+        items.add(Command(activity.baseContext,"APN", activity.getString(R.string.apn_cm)))
+        items.get(4).intent = Intent(activity.baseContext, CommandServerSettings::class.java)
+        items.get(4).redirect_activity = 1
+
+        items.add(Command(activity.baseContext,"GPS", activity.getString(R.string.gps)))
+
+        items.add(Command(activity.baseContext,"CLR", activity.getString(R.string.clr)))
+
+        items.add(Command(activity.baseContext,"STAT", activity.getString(R.string.stat)))
+
+        items.add(Command(activity.baseContext,"VAL", activity.getString(R.string.val_cm)))
+
+        items.add(Command(activity.baseContext,"SHOWCFG", activity.getString(R.string.showcfg)))
+
+        items.add(Command(activity.baseContext,"TIME", activity.getString(R.string.time_cm)))
+        items.get(10).redirect_activity = 1
+
+        items.add(Command(activity.baseContext,"REQDATA", activity.getString(R.string.reqdata)))
+
+        items.add(Command(activity.baseContext,"REQUPD", activity.getString(R.string.requpd)))
 
     }
 
@@ -49,7 +65,7 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
         return items.size
     }
 
-    override fun getItem(position: Int): Any {
+    override fun getItem(position: Int): Command {
         return items[position]
     }
 
@@ -60,18 +76,17 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View?
         val viewHolder: ViewHolder
+        val command = items[position]
 
         if (convertView == null){
-            val inflater = activity?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = inflater.inflate(R.layout.listitem_command, null)
+            val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            view = inflater.inflate(command.activity, null)
             viewHolder = ViewHolder(view)
             view?.tag = viewHolder
         } else {
             view = convertView
             viewHolder = view.tag as ViewHolder
         }
-
-        val command = items[position]
 
 //        val id = device.get_id()
 //
@@ -96,7 +111,7 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
 //            this.notifyDataSetChanged()
 //        }
 
-        viewHolder.txt_test?.text = "$position: ${command.command}, ${command.description}"
+        viewHolder.txt_test?.text = "${command.description}"
 
         return view as View
     }

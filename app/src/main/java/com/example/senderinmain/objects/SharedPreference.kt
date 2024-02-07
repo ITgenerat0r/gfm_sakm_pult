@@ -28,8 +28,8 @@ class SharedPreference(val context: Context) {
     }
 
 
-    fun get_str(KEY_NAME: String): String? {
-        return sharedPref.getString(KEY_NAME, null)
+    fun get_str(KEY_NAME: String): String {
+        return "${sharedPref.getString(KEY_NAME, null)}"
     }
 
 
@@ -37,7 +37,7 @@ class SharedPreference(val context: Context) {
         return sharedPref.getInt(KEY_NAME, 0)
     }
 
-    fun get_bool(KEY_NAME: String): Boolean? {
+    fun get_bool(KEY_NAME: String): Boolean {
         return sharedPref.getBoolean(KEY_NAME, false)
     }
 

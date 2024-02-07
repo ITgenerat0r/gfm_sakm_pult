@@ -82,80 +82,96 @@ class DeviceActivity : AppCompatActivity() {
                 val adapter = DeviceCommandsAdapter(this, device!!.get_phone())
                 adapter.init_items()
                 listview_commands?.adapter = adapter
+                Log.d(TAG, "Before setonclick")
+                listview_commands?.setOnItemClickListener { parent, view, position, id ->
+                    Log.d(TAG, "pos: $position")
+                    val cm = adapter.getItem(position)
+                    if (cm.redirect_activity > 0) {
+                        val pref = SharedPreference(this.baseContext)
+                        pref.set_str("cm_settings", cm.command)
+                        pref.set_str("phonenumber", adapter.phone)
+                        startActivity(cm.intent)
+                    } else {
+                        val permission = smsGateway!!.checkSMSPermission()
+                        if (permission) {
+                            out_txt.setText(out_txt.text.toString() + "\r\n Send: \r\n SAKM:${cm.command.uppercase()}")
+                            smsGateway!!.send_to_sakm(adapter.phone, cm.command)
+                        } else {
+                            Log.d(TAG, "Where is permission?")
+                            out_txt.setText(out_txt.text.toString() + "\r\n Can't send, permission denied.\r\n")
+                        }
+                    }
+
+                }
+                Log.d(TAG, "After setonclick")
                 adapter.notifyDataSetChanged()
             }
-        }
 
-        Log.d(TAG, "Set onClickListener...")
-        btn_send.setOnClickListener {
-            var phone_number = device?.get_phone()
-            var message = "" + input_command.editableText
-            if (phone_number.equals("")) {
-                Log.d(TAG, "Phone is empty")
-                return@setOnClickListener
+
+            Log.d(TAG, "Set onClickListener...")
+            btn_send.setOnClickListener {
+                val phone_number = device?.get_phone()
+                val message = "" + input_command.editableText
+                val permission = smsGateway!!.checkSMSPermission()
+                if (permission) {
+                    out_txt.setText(out_txt.text.toString() + "\r\n Send: \r\n $message")
+                    smsGateway!!.send_to_sakm(phone_number!!, message)
+                } else {
+                    Log.d(TAG, "Where is permission?")
+                    out_txt.setText(out_txt.text.toString() + "\r\n Can't send, permission denied.\r\n")
+                }
+                input_command.setText("")
             }
-            if (message.equals("")) {
-                message = "SAKM:STAT"
-            } else {
-                message = "SAKM:${message.uppercase()}"
-            }
 
-            Log.d(TAG, "Send $message to $phone_number.")
-
-            val permission = smsGateway!!.checkSMSPermission()
-
-            if( permission){
-                out_txt.setText(out_txt.text.toString() + "\r\n Send: \r\n $message")
-                smsGateway!!.sendSms(phone_number!!, message)
-            } else {
-                Log.d(TAG, "Where is permission?")
-                out_txt.setText(out_txt.text.toString() + "\r\n Can't send, permission denied.\r\n")
-            }
-            input_command.setText("")
-        }
-
-        Log.d(TAG, "Set up BroadcastReceiver for SMS...")
-        val br = object : BroadcastReceiver() {
-            override fun onReceive(p0: Context?, p1: Intent?) {
-                for (sms in Telephony.Sms.Intents.getMessagesFromIntent(
-                    p1
-                )) {
-                    val smsSender = sms.originatingAddress
-                    val smsMessageBody = sms.displayMessageBody
-                    Log.d(TAG, "From $smsSender received $smsMessageBody")
-                    if (smsSender == device?.get_phone() || smsSender == device?.get_second_phone()) {
-                        val res: String = out_txt.text.toString() + "\r\n Receive: \r\n" + smsMessageBody
-                        out_txt.setText(res)
-                        val rows = smsMessageBody.split("\r\n")
-                        for (row in rows){
-                            Log.d(TAG, "ROW: $row")
-                            val ind = row.indexOf(':')
-                            if (ind >= 0){
-                                Log.d(TAG, "parse")
-                                val key = row.substring(0, ind)
-                                val value = row.substring(ind+1)
-                                Log.d(TAG, "key: $key")
-                                Log.d(TAG, "value: $value")
-                                if (key == "ID"){
-                                    device?.set_id(value.toInt())
+            Log.d(TAG, "Set up BroadcastReceiver for SMS...")
+            val br = object : BroadcastReceiver() {
+                override fun onReceive(p0: Context?, p1: Intent?) {
+                    for (sms in Telephony.Sms.Intents.getMessagesFromIntent(
+                        p1
+                    )) {
+                        val smsSender = sms.originatingAddress
+                        val smsMessageBody = sms.displayMessageBody
+                        Log.d(TAG, "From $smsSender received $smsMessageBody")
+                        if (smsSender == device?.get_phone() || smsSender == device?.get_second_phone()) {
+                            val res: String =
+                                out_txt.text.toString() + "\r\n Receive: \n" + smsMessageBody
+                            out_txt.setText(res)
+                            val rows = smsMessageBody.split("\n")
+                            for (row in rows) {
+                                Log.d(TAG, "ROW: $row")
+                                val ind = row.indexOf(':')
+                                if (ind >= 0) {
+                                    Log.d(TAG, "parse")
+                                    val key = row.substring(0, ind)
+                                    val value = row.substring(ind + 1)
+                                    Log.d(TAG, "key: $key")
+                                    Log.d(TAG, "value: $value")
+                                    if (key == "ID") {
+                                        storage!!.get_device(device!!.get_id())?.set_id(value.toInt())
+                                        storage!!.save()
+                                        device?.set_id(value.toInt())
+                                        txt_id.setText(getString(R.string.id) + ": " + device!!.get_id().toString())
+                                    }
+                                    Log.d(TAG, "settle")
+                                    val sensor = Entities(applicationContext)
+                                } else {
+                                    Log.d(TAG, "another")
                                 }
-                                val sensor = Entities(applicationContext)
-                            } else {
-                                Log.d(TAG, "another")
                             }
+                            break
                         }
-                        break
                     }
                 }
             }
-        }
 
-        registerReceiver(
-            br,
-            IntentFilter("android.provider.Telephony.SMS_RECEIVED"),
-            RECEIVER_EXPORTED
-        )
-        Log.d(TAG, "Successful run.")
+
+            registerReceiver(
+                br,
+                IntentFilter("android.provider.Telephony.SMS_RECEIVED"),
+                RECEIVER_EXPORTED
+            )
+            Log.d(TAG, "Successful run.")
+        }
     }
 
 }
