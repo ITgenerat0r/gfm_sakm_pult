@@ -35,16 +35,21 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
         items.get(4).redirect_activity = 1
 
         items.add(Command(activity.baseContext,"GPS", activity.getString(R.string.gps)))
+        items.get(5).text = "coords: 0, 0"
 
         items.add(Command(activity.baseContext,"CLR", activity.getString(R.string.clr)))
 
         items.add(Command(activity.baseContext,"STAT", activity.getString(R.string.stat)))
+        items.get(7).text = "Tap to request"
 
         items.add(Command(activity.baseContext,"VAL", activity.getString(R.string.val_cm)))
+        items.get(8).text = "Tap to request"
 
         items.add(Command(activity.baseContext,"SHOWCFG", activity.getString(R.string.showcfg)))
+        items.get(9).text = "Tap to request"
 
         items.add(Command(activity.baseContext,"TIME", activity.getString(R.string.time_cm)))
+        items.get(10).intent = Intent(activity.baseContext, CommandTimeSettings::class.java)
         items.get(10).redirect_activity = 1
 
         items.add(Command(activity.baseContext,"REQDATA", activity.getString(R.string.reqdata)))
@@ -56,9 +61,12 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
     private class ViewHolder(row: View?){
 
         var txt_test: TextView? = null
+        var txt_desc: TextView? = null
         init {
             Log.d(TAG, "ViewHolder")
             this.txt_test = row?.findViewById(R.id.txt_listitem_test)
+            this.txt_desc = row?.findViewById(R.id.txt_listitem_desc)
+            this.txt_desc?.visibility = View.GONE
         }
     }
     override fun getCount(): Int {
@@ -112,6 +120,13 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
 //        }
 
         viewHolder.txt_test?.text = "${command.description}"
+
+        if (command.text.isNotEmpty()){
+            viewHolder.txt_desc?.text = command.text
+            viewHolder.txt_desc?.visibility = View.VISIBLE
+        } else {
+            viewHolder.txt_desc?.visibility = View.GONE
+        }
 
         return view as View
     }

@@ -24,6 +24,9 @@
         android:theme="@style/Theme.SenderInMain"
         tools:targetApi="31">
         <activity
+            android:name=".CommandTimeSettings"
+            android:exported="false" />
+        <activity
             android:name=".CommandServerSettings"
             android:exported="false" />
         <activity

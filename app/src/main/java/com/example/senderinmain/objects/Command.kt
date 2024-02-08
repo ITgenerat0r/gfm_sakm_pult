@@ -16,6 +16,7 @@ class Command(val context: Context) {
     val activity: Int = R.layout.listitem_command
     var redirect_activity: Int = 0
     var intent = Intent(this.context, CommandServerSettings::class.java)
+    var text = ""
 
     constructor(context: Context, cm: String, descr: String = "") : this(context) {
         this.command = cm

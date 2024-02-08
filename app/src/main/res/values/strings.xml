@@ -35,7 +35,7 @@
     <string name="stat">Get statistics</string>
     <string name="val_cm">Get current sensors values</string>
     <string name="showcfg">Get current configuration</string>
-    <string name="time_cm">Set up time</string>
+    <string name="time_cm">Set up date and time</string>
     <string name="reqdata">Initiate registrator for connection to data server</string>
     <string name="requpd">Initiate registrator for connection to update server</string>
     <string name="swsim">Switch SIM</string>
@@ -48,4 +48,6 @@
     <string name="apply">Apply</string>
     <string name="wrong_ip">IP should be *.*.*.*, where * is number</string>
     <string name="wrong_number">This should be number</string>
+    <string name="set_system_time">Set system date and time</string>
+    <string name="select_time">Select time</string>
 </resources>
