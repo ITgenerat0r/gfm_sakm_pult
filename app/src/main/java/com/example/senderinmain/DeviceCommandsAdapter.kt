@@ -58,6 +58,25 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
 
     }
 
+    fun set_text(id: Int, text: String){
+        items.get(id).text = text
+    }
+
+    fun set_text_by_command(cm: String, text: String){
+        var id = -1
+        var counter = 0
+        for (item in items){
+            if (item.command == cm){
+                id = counter
+                break
+            }
+            counter += 1
+        }
+        if (id > -1){
+            set_text(id, text)
+        }
+    }
+
     private class ViewHolder(row: View?){
 
         var txt_test: TextView? = null
@@ -122,8 +141,8 @@ class DeviceCommandsAdapter(private var activity: Activity, val phone: String):
         viewHolder.txt_test?.text = "${command.description}"
 
         if (command.text.isNotEmpty()){
-            viewHolder.txt_desc?.text = command.text
             viewHolder.txt_desc?.visibility = View.VISIBLE
+            viewHolder.txt_desc?.text = "${command.text}"
         } else {
             viewHolder.txt_desc?.visibility = View.GONE
         }

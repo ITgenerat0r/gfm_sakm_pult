@@ -48,4 +48,18 @@
     <string name="wrong_number">Требуется число</string>
     <string name="set_system_time">Установить дату и время по системному времени</string>
     <string name="select_time">Выбрать время</string>
+    <string name="coords">Координаты</string>
+    <string name="sensor">Датчик</string>
+    <string name="location">Расположение</string>
+    <string name="type">Тип</string>
+    <string name="status">Статус</string>
+    <string name="value">Значение</string>
+    <string name="key_srv">Сервер</string>
+    <string name="key_upd">Интервал подключения</string>
+    <string name="key_uptime">Рабочее время</string>
+    <string name="key_livetime">Время жизни</string>
+    <string name="key_flash">Память</string>
+    <string name="key_link">Соединение</string>
+    <string name="key_up">Есть</string>
+    <string name="key_down">Нету</string>
 </resources>

@@ -53,6 +53,8 @@ class DeviceActivity : AppCompatActivity() {
         val input_command = findViewById<EditText>(R.id.editText_command)
         val btn_send = findViewById<Button>(R.id.btn_send)
 
+        lateinit var adapter: DeviceCommandsAdapter
+
         storage = Storage(this)
         storage!!.load()
         sharedPreference = SharedPreference(this)
@@ -79,7 +81,7 @@ class DeviceActivity : AppCompatActivity() {
                 txt_description.text =
                     "" + getString(R.string.description) + ": " + device!!.get_description()
                 val intent = Intent(this, DeviceActivity::class.java)
-                val adapter = DeviceCommandsAdapter(this, device!!.get_phone())
+                adapter = DeviceCommandsAdapter(this, device!!.get_phone())
                 adapter.init_items()
                 listview_commands?.adapter = adapter
                 Log.d(TAG, "Before setonclick")
@@ -136,28 +138,37 @@ class DeviceActivity : AppCompatActivity() {
                             val res: String =
                                 out_txt.text.toString() + "\r\n Receive: \n" + smsMessageBody
                             out_txt.setText(res)
-                            val rows = smsMessageBody.split("\n")
-                            for (row in rows) {
-                                Log.d(TAG, "ROW: $row")
-                                val ind = row.indexOf(':')
-                                if (ind >= 0) {
-                                    Log.d(TAG, "parse")
-                                    val key = row.substring(0, ind)
-                                    val value = row.substring(ind + 1)
-                                    Log.d(TAG, "key: $key")
-                                    Log.d(TAG, "value: $value")
-                                    if (key == "ID") {
-                                        storage!!.get_device(device!!.get_id())?.set_id(value.toInt())
-                                        storage!!.save()
-                                        device?.set_id(value.toInt())
-                                        txt_id.setText(getString(R.string.id) + ": " + device!!.get_id().toString())
-                                    }
-                                    Log.d(TAG, "settle")
-                                    val sensor = Entities(applicationContext)
-                                } else {
-                                    Log.d(TAG, "another")
+                            val sensor = Entities(applicationContext)
+                            val ind = smsMessageBody.indexOf(':')
+                            if (ind >= 0) {
+                                Log.d(TAG, "parse")
+                                val key = smsMessageBody.substring(0, ind)
+                                val val_ind = smsMessageBody.indexOf("\n")
+                                var value: String = device!!.get_id().toString()
+                                if (val_ind >= 0){
+                                    value = smsMessageBody.substring(ind + 1, val_ind)
                                 }
+                                Log.d(TAG, "key: $key")
+                                Log.d(TAG, "value: $value")
+                                if (key == "ID") {
+                                    storage!!.get_device(device!!.get_id())?.set_id(value.toInt())
+                                    storage!!.save()
+                                    device?.set_id(value.toInt())
+                                    txt_id.setText(getString(R.string.id) + ": " + device!!.get_id().toString())
+                                    adapter.set_text_by_command("STAT", sensor.parse_stat(smsMessageBody))
+                                    break
+                                } else if (key == "SRV"){
+                                    adapter.set_text_by_command("SHOWCFG", sensor.parse_stat(smsMessageBody))
+                                    break
+                                } else {
+                                    adapter.set_text_by_command("VAL", sensor.parse_sensor_value(smsMessageBody))
+                                }
+                                Log.d(TAG, "settle")
+                            } else {
+                                Log.d(TAG, "another")
+                                adapter.set_text_by_command("GPS", "${getString(R.string.coords)}: ${smsMessageBody}")
                             }
+                            adapter.notifyDataSetChanged()
                             break
                         }
                     }

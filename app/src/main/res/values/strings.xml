@@ -50,4 +50,18 @@
     <string name="wrong_number">This should be number</string>
     <string name="set_system_time">Set system date and time</string>
     <string name="select_time">Select time</string>
+    <string name="coords">Coordinates</string>
+    <string name="sensor">Sensor</string>
+    <string name="location">Location</string>
+    <string name="type">Type</string>
+    <string name="status">Status</string>
+    <string name="value">Value</string>
+    <string name="key_srv">Data server</string>
+    <string name="key_upd">Connection interval</string>
+    <string name="key_uptime">Uptime</string>
+    <string name="key_livetime">Livetime</string>
+    <string name="key_flash">Flash memory</string>
+    <string name="key_link">Link</string>
+    <string name="key_up">Up</string>
+    <string name="key_down">Down</string>
 </resources>
